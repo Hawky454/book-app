@@ -21,6 +21,7 @@
     cursor: pointer;
     outline: none;
     color: #fa923f;
+    font-size: .8em;
 }
 
 .Edit button:hover,
