@@ -9,7 +9,8 @@ import './Blog.css';
 class Blog extends Component {
   state = {
     posts: [],
-    selectedPostId: null
+    selectedPostId: null,
+    error: false
   }
 
 
@@ -28,7 +29,8 @@ class Blog extends Component {
         console.log(response)
       })
       .catch(error => {
-        console.log(error)
+        this.setState({ error: true })
+        console.error('This Is My Personal Error Message:::', error)
       })
   }
 
@@ -39,14 +41,20 @@ class Blog extends Component {
   }
 
   render() {
-    const posts = this.state.posts.map(post => {
-      return <Post
-        key={post.id}
-        title={post.title}
-        author={post.author}
-        whenClicked={() => this.postSelectedHandler(post.id)}
-      />
-    })
+    let posts = <p style={{ textAlign: 'center', color: 'red' }}>Something is a foot, hold on while we figure this out!</p>
+
+    if (!this.state.error) {
+      posts = this.state.posts.map(post => {
+        return <Post
+          key={post.id}
+          title={post.title}
+          author={post.author}
+          whenClicked={() => this.postSelectedHandler(post.id)}
+        />
+      })
+    }
+
+
 
 
     return (
