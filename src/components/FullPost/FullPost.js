@@ -9,18 +9,30 @@ class FullPost extends Component {
   }
 
   componentDidUpdate() {
+    //!thse two if statements are meant to keep the request from looping.  Check network on console to see if request is looping!
     if (this.props.id) {
-      axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
-        .then(res => {
-          this.setState({
-            loadedPost: res.data
+      if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
+        axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+          .then(res => {
+            this.setState({
+              loadedPost: res.data
+            })
+            console.log('[FullPost.js] res.data:', res.data);
           })
-          console.log('[FullPost.js] res.data:', res.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
+  }
+
+  deletePostHandler = () => {
+    //! Delete method in action
+    axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
+      .then(res => {
+        console.log(res)
+      })
+    console.log('this is the delete button')
   }
 
   render() {
@@ -36,7 +48,7 @@ class FullPost extends Component {
           <span style={{ fontWeight: 'bold' }}>Content:</span>
           <p>{this.state.loadedPost.body}</p>
           <div className="Edit">
-            <button className="Delete">Delete</button>
+            <button onClick={this.deletePostHandler} className="Delete">Delete</button>
           </div>
         </div>
       );

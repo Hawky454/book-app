@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './NewPost.css';
 
 class NewPost extends Component {
   state = {
     title: '',
     content: '',
-    author: 'Max'
+    author: 'Sir David Miller'
   };
+
+  postDataHandler = () => {
+    //! This object will be telling the post what we are sending, you could also just put this object in after the comma.
+    const myData = {
+      title: this.state.title,
+      body: this.state.content,
+      author: this.state.author
+    }
+    axios.post('https://jsonplaceholder.typicode.com/posts', myData)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+
+    console.log('clicked')
+  }
 
   render() {
     return (
@@ -29,10 +49,14 @@ class NewPost extends Component {
           value={this.state.author}
           onChange={event => this.setState({ author: event.target.value })}
         >
-          <option value="Max">Max</option>
-          <option value="Manu">Manu</option>
+          <option value="Dave">Dave</option>
+          <option value="Donna">Manu</option>
+          <option value="Neal">Donna</option>
+          <option value="Matt">Neal</option>
+          <option value="Luke">Matt</option>
+          <option value="Lilah">Luke</option>
         </select>
-        <button>Add Post</button>
+        <button onClick={this.postDataHandler}>Add Post</button>
       </div>
     );
   }
