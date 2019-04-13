@@ -19,10 +19,10 @@ class Blog extends Component {
       .then(response => {
         // const limitPosts = response.data.slice(0, 6)
         //! This allows you to control how many posts you receive
-        const updatedPosts = response.data.slice(0, 6).map(post => {
+        const updatedPosts = response.data.slice(0, 10).map(post => {
           return {
             ...post,
-            author: 'David'
+            author: 'Author Name Here'
           }
         })
         this.setState({ posts: updatedPosts })
